@@ -45,7 +45,7 @@ const WAMP = {
             console.log('There was an error connecting to the WAMP router', error)
         }
     },
-    async close(url, options) {
+    async disconnect() {
         if (!WAMP.connected) {
             console.log('WAMP is not connected')
 
