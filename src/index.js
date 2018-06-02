@@ -1,5 +1,3 @@
-require('utils/require')
-
 const wampBuilder = require('./wamp')
 
 const Wampy = require('wampy').Wampy
