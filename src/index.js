@@ -53,7 +53,7 @@ const WAMP = {
             WAMP.call = call
             WAMP.register = register
             WAMP.publish = publish
-            WAMP.subscribe = call
+            WAMP.subscribe = subscribe
 
             WAMP.connected = true
             WAMP.connectedSince = new Date()
