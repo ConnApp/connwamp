@@ -1,5 +1,5 @@
 const test = require('ava')
-const { getObjectType } = rrequire('utils/shared')
+const { getObjectType } = require('../../utils/shared')
 
 const { messages, getCallback } = require('./callbacks')
 

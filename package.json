@@ -17,8 +17,7 @@
             "src/**/*.test.js"
         ],
         "require": [
-            "babel-polyfill",
-            "./src/utils/require"
+            "babel-polyfill"
         ]
     },
     "keywords": [

@@ -1,7 +1,9 @@
 const test = require('ava')
-
-const { getObjectType } = rrequire('utils/shared')
+const path = require('path')
+const { getObjectType } = require('../../utils/shared')
 const { getMethod, methodWrapper, callbackWrapper, buildMethods } = require('./wamp')
+
+const src_path = path.resolve(__dirname, '../../')
 
 const methods = [
     'call',
@@ -25,7 +27,7 @@ test('should get methods correctly', async t => {
 test('should throw error when require unexisting method', async t => {
     const error = await t.throws(() => getMethod('null'))
 
-    t.is(error.message, `Cannot find module '${src_path}wamp/null'`)
+    t.is(error.message, `Cannot find module '${src_path}/wamp/null'`)
 })
 
 test('should throw error no method name is provided', async t => {
@@ -448,7 +450,7 @@ test('should throw error when method does not exists', async t => {
 
     const error = await t.throws(method('test', { isPayload: true }, options))
 
-    const expectedResponse = `Cannot find module '${src_path}wamp/null'`
+    const expectedResponse = `Cannot find module '${src_path}/wamp/null'`
 
     t.deepEqual(error.message, expectedResponse)
 })

@@ -11,7 +11,7 @@ function buildRoute() {
 
 // NOTE NOT USED
 const requireModules = moduleName => {
-    const modelsDirPath = path.join(src_path, moduleName)
+    const modelsDirPath = path.resolve('../', moduleName)
 
     const modules = fs
         .readdirSync(modelsDirPath)
@@ -19,7 +19,7 @@ const requireModules = moduleName => {
 
     return modules.map(module => ({
         name: module.split('.js').join(''),
-        routes: rrequire(`${moduleName}/${module}`),
+        routes: require(`../${moduleName}/${module}`),
     }))
 }
 

@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { isFunction, buildRoute, readFileInDir, getObjectType } = rrequire('utils/shared')
+const { isFunction, buildRoute, readFileInDir, getObjectType } = require('./shared')
 
 test('getObjectType tests', async t => {
     const elements = [
@@ -88,7 +88,6 @@ test('should test if is function correctly', async t => {
 
 test('should read files in a directory correctly and not read test files', async t => {
     const expectedResult = [
-        'require',
         'shared',
     ]
 
