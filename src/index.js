@@ -1,7 +1,7 @@
 const wampBuilder = require('./wamp')
 
 const Wampy = require('wampy').Wampy
-const w3cws = require('websocket').w3cwebsocket
+const { w3cwebsocket } = require('websocket').w3cwebsocket
 
 const WAMP = {
     call: null,
@@ -24,7 +24,7 @@ const WAMP = {
 
         try {
             const wampSession = new Wampy(url, {
-                client: w3cws,
+                ws: w3cwebsocket,
                 maxRetries: 999,
                 reconnectInterval: 1000,
                 onConnect() {
@@ -46,6 +46,10 @@ const WAMP = {
                 ...options,
             })
 
+            if (wampSession._cache.opStatus.description !== 'Success!') {
+                throw new Error(wampSession._cache.opStatus.description)
+            }
+
             WAMP.session = wampSession
 
             const { call, register, publish, subscribe } = wampBuilder(WAMP.session)
@@ -58,7 +62,7 @@ const WAMP = {
             WAMP.connected = true
             WAMP.connectedSince = new Date()
         } catch (error) {
-            console.log('There was an error connecting to the WAMP router', error)
+            console.log('There was an error connecting to the WAMP router. => ERROR: ', error)
         }
     },
     async disconnect() {
@@ -80,7 +84,7 @@ const WAMP = {
             WAMP.connected = null
             WAMP.connectedSince = null
         } catch (error) {
-            console.log('There was an error disconnecting from the WAMP router', error)
+            console.log('There was an error disconnecting from the WAMP router. => ERROR: ', error)
         }
     },
 }
