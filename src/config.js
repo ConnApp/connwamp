@@ -2,8 +2,9 @@
 
 const envName = process.env.NODE_ENV || 'development'
 
-const isProduction = !isDevelopment
 const isDevelopment = envName === 'development'
+
+const isProduction = !isDevelopment
 
 module.exports = {
     envName,
