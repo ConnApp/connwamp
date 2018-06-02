@@ -25,6 +25,24 @@ const WAMP = {
         try {
             const wampSession = new Wampy(url, {
                 client: w3cws,
+                maxRetries: 999,
+                reconnectInterval: 1000,
+                onConnect() {
+                    console.log(`Connect to WAMP router at: ${url}`)
+                },
+                onClose() {
+                    console.log(`Successfully disconnected from router: ${url}`)
+                },
+                onError(err) {
+                    console.log(`Something when wrong while connections to router: ${url}`)
+                    console.log('ERROR: ', err)
+                },
+                onReconnect() {
+                    console.log(`Reconnecting to router: ${url} ...`)
+                },
+                onReconnectSuccess() {
+                    console.log(`Successfully reconected to router: ${url}`)
+                },
                 ...options,
             })
 
