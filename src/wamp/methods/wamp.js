@@ -16,10 +16,12 @@ const allowedMethodNames = [
 ]
 
 const parseArgs = args => {
-    return {
-        payload: args.argsDict,
-        procedure: args.details.procedure,
-    }
+    return [
+        {
+            payload: args[0].argsDict,
+            procedure: args[0].details.procedure,
+        },
+    ]
 }
 
 const getMethod = methodName => {
@@ -38,7 +40,9 @@ const getMethod = methodName => {
 
 const callbackWrapper = (callback, { pre, post } = {}) => {
     return async function() {
-        const functionArguments = parseArgs(arguments)
+        const functionArguments = parseArgs([
+            ...arguments,
+        ])
 
         let preResult = {}
 
@@ -49,15 +53,15 @@ const callbackWrapper = (callback, { pre, post } = {}) => {
         }
 
         const mainResult = await callback.apply(null, [
-            ...functionArguments,
             preResult,
+            ...functionArguments,
         ])
 
         if (isFunction(post)) {
             await post.apply(null, [
-                ...functionArguments,
-                preResult,
                 mainResult,
+                preResult,
+                ...functionArguments,
             ])
         }
 
