@@ -1,7 +1,7 @@
 const wampBuilder = require('./wamp')
 
 const Wampy = require('wampy').Wampy
-const { w3cwebsocket } = require('websocket').w3cwebsocket
+const { w3cwebsocket } = require('websocket')
 
 const WAMP = {
     call: null,
