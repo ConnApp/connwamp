@@ -15,6 +15,13 @@ const allowedMethodNames = [
     'subscribe',
 ]
 
+const parseArgs = args => {
+    return {
+        payload: args.argsDict,
+        procedure: args.details.procedure,
+    }
+}
+
 const getMethod = methodName => {
     let method
     // TODO Validate Method Name
@@ -31,7 +38,7 @@ const getMethod = methodName => {
 
 const callbackWrapper = (callback, { pre, post } = {}) => {
     return async function() {
-        const functionArguments = arguments
+        const functionArguments = parseArgs(arguments)
 
         let preResult = {}
 
