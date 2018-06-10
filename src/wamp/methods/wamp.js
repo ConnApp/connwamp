@@ -53,15 +53,15 @@ const callbackWrapper = (callback, { pre, post } = {}) => {
         }
 
         const mainResult = await callback.apply(null, [
-            preResult,
             ...functionArguments,
+            preResult,
         ])
 
         if (isFunction(post)) {
             await post.apply(null, [
+                ...functionArguments,
                 mainResult,
                 preResult,
-                ...functionArguments,
             ])
         }
 
