@@ -58,7 +58,7 @@ const callbackWrapper = (callback, { pre, post } = {}) => {
     }
 }
 
-const methodWrapper = methodName => wamp => (route, payload, { pre, post, ...options }) =>
+const methodWrapper = methodName => wamp => (route, payload, { pre, post, ...options } = {}) =>
     new Promise((resolve, reject) => {
         {
             // TODO Validate methodName and Routes
@@ -67,10 +67,12 @@ const methodWrapper = methodName => wamp => (route, payload, { pre, post, ...opt
                 const callbacks = buildCallbacks(resolve, reject)(methodName, route)
 
                 if (isFunction(payload)) {
-                    payload = callbackWrapper(payload, {
+                    const callbackOptions = {
                         pre,
                         post,
-                    })
+                    }
+
+                    payload = callbackWrapper(payload, callbackOptions)
                 }
 
                 return method(wamp)(route, payload, callbacks, options) // NOTE Might throw error
