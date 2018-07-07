@@ -1,3 +1,3 @@
-const { buildMethods } = require('./methods/wamp')
+const buildMethods = require('./utils/buildMethods')
 
-module.exports = wamp => buildMethods(wamp)
+module.exports = wamp => buildMethods(wamp, __dirname)

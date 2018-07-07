@@ -4,6 +4,7 @@
     "description": "Improved WAMP connection package that uses wampy.js with more juicy stuff",
     "main": "src/index.js",
     "scripts": {
+        "clean-install": "rm -rf node_modules && npm install",
         "start": "node src/index.js",
         "test": "NODE_ENV=test nyc ava --verbose",
         "test:watch": "NODE_ENV=test ava --watch --verbose"
@@ -34,7 +35,8 @@
         "wampy": "^6.2.0",
         "loglevel": "^1.6.1",
         "websocket": "^1.0.26",
-        "to-slug-case": "^1.0.0"
+        "to-slug-case": "^1.0.0",
+        "connutils": "git+https://github.com/ConnApp/connutils.git#master"
     },
     "devDependencies": {
         "ava": "^0.25.0",

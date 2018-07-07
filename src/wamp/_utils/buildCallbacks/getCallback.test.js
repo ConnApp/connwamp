@@ -1,36 +1,24 @@
 const test = require('ava')
-const { getObjectType } = require('../../utils/shared')
+const { getType } = require('connutils/src/assert')
 
-const { messages, getCallback } = require('./callbacks')
-
-test('should get correctly success message', async t => {
-    const successMessage = messages['success']('methodName', 'route')
-
-    t.is(successMessage, 'METHODNAME - route assigned successfully')
-})
-
-test('should get correctly error message', async t => {
-    const successMessage = messages['error']('methodName', 'route')
-
-    t.is(successMessage, 'METHODNAME - route assignment failed!')
-})
+const getCallback = require('./getCallback')
 
 test('getCallback should take status and return a function', async t => {
     const getCallbackStatus = getCallback('success')
 
-    t.is(getObjectType(getCallbackStatus), 'Function')
+    t.is(getType(getCallbackStatus), 'Function')
 })
 
 test('getCallback should take status and promise-element(reject or resolve) and return a function', async t => {
     const getCallbackStatusPromise = getCallback('success')(Promise.resolve)
 
-    t.is(getObjectType(getCallbackStatusPromise), 'Function')
+    t.is(getType(getCallbackStatusPromise), 'Function')
 })
 
 test('getCallback should take status, promise-element(reject or resolve) and methodName and route and return a function', async t => {
     const getCallbackStatusPromiseMethod = getCallback('success')(Promise.resolve)('methodName', 'route')
 
-    t.is(getObjectType(getCallbackStatusPromiseMethod), 'Function')
+    t.is(getType(getCallbackStatusPromiseMethod), 'Function')
 })
 
 test('getCallback should take status, promise-element(reject or resolve), methodName and route and a payload, and return a promise', async t => {

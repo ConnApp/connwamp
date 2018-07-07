@@ -1,12 +1,12 @@
 const test = require('ava')
-const getCallback = require('./callbacks')
+const buildCallbacks = require('.')
 
 test('should resolve promise when executing success callback', async t => {
     const route = 'route'
     const methodName = 'method'
 
     const result = await new Promise((resolve, reject) => {
-        return getCallback(resolve, reject)(methodName, route).onSuccess(true)
+        return buildCallbacks(resolve, reject)(methodName, route).onSuccess(true)
     })
 
     const expectedResult = {
@@ -24,7 +24,7 @@ test('should reject promise when executing error callback', async t => {
 
     const result = await t.throws(
         new Promise((resolve, reject) => {
-            return getCallback(resolve, reject)(methodName, route).onError(true)
+            return buildCallbacks(resolve, reject)(methodName, route).onError(true)
         })
     )
 
