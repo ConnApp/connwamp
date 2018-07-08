@@ -1,5 +1,5 @@
 const getMethod = require('./getMethod')
-const buildCallbacks = require('../buildCallbacks')
+const buildCallbacks = require('./buildCallbacks')
 const callbackWrapper = require('./callbackWrapper')
 const { isFunction } = require('connutils/src/assert')
 

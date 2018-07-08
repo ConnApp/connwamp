@@ -1,7 +1,8 @@
 const path = require('path')
-const wampPath = path.resolve(__dirname, '../')
-
 const { listFiles } = require('connutils/src/fs')
+
+const wampPath = path.resolve(__dirname, '../')
+const methodWrapper = require('./methodWrapper')
 
 const allowedMethodNames = [
     'call',
@@ -9,8 +10,6 @@ const allowedMethodNames = [
     'publish',
     'subscribe',
 ]
-
-const methodWrapper = require('../methodWrapper')
 
 module.exports = function wamp_methods_wamp_buildMethods(wamp) {
     if (!wamp) throw new Error('Missing wamp connection object')
