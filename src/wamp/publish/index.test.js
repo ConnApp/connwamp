@@ -1,7 +1,7 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const publish = require('./publish')
+const publish = require('.')
 
 test('should publish route with correct arguments', async t => {
     const spy = sinon.spy()

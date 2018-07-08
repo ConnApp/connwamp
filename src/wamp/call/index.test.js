@@ -1,7 +1,7 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const call = require('./call')
+const call = require('.')
 
 test('should call route with correct arguments', async t => {
     const spy = sinon.spy()

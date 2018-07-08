@@ -1,7 +1,9 @@
 const test = require('ava')
-
+const path = require('path')
 const getMethod = require('./getMethod')
 const { getType } = require('connutils/src/assert')
+
+const src_path = path.resolve(__dirname, '../../../')
 
 const methods = [
     'call',

@@ -1,7 +1,7 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const register = require('./register')
+const register = require('.')
 
 test('should register route with correct arguments', async t => {
     const spy = sinon.spy()

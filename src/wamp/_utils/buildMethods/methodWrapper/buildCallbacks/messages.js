@@ -1,4 +1,4 @@
-const messages = {
+module.exports = {
     error(methodName, route) {
         return `${methodName.toUpperCase()} - ${route} assignment failed!`
     },
@@ -7,5 +7,3 @@ const messages = {
         return `${methodName.toUpperCase()} - ${route} assigned successfully`
     },
 }
-
-module.exports = messages

@@ -1,7 +1,7 @@
 const test = require('ava')
 const sinon = require('sinon')
 
-const subscribe = require('./subscribe')
+const subscribe = require('.')
 
 test('should subscribe route with correct arguments', async t => {
     const spy = sinon.spy()

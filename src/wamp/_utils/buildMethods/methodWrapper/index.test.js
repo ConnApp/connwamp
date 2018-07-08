@@ -1,21 +1,26 @@
 const test = require('ava')
 const path = require('path')
 
-const methodWrapper = require('./methodWrapper')
+const methodWrapper = require('.')
 
-const src_path = path.resolve(__dirname, '../../')
+const src_path = path.resolve(__dirname, '../../../')
 
 test('should wrap register method correctly with the right options', async t => {
     t.plan(7)
 
+    const args = {
+        argsDict: { objectFromCall: true },
+        details: { procedure: 'procedure' },
+    }
+
     const options = {
         other: true,
-        pre(payload) {
+        pre({ payload }) {
             t.true(payload.objectFromCall)
 
             return { fromPre: true }
         },
-        post(payload, preResult, mainResult) {
+        post({ payload }, mainResult, preResult) {
             t.true(preResult.fromPre)
             t.true(payload.objectFromCall)
             t.true(mainResult.hasBeenDone)
@@ -27,15 +32,15 @@ test('should wrap register method correctly with the right options', async t => 
             t.true(options.other)
 
             callbacks.onSuccess(true)
-            callbacks.rpc({ objectFromCall: true })
+            callbacks.rpc(args)
         },
     }
 
-    const method = methodWrapper('register')(wampMock)
+    const method = methodWrapper('register', wampMock)
 
     const response = await method(
         'test',
-        payload => {
+        ({ payload }) => {
             t.true(payload.objectFromCall)
 
             return { hasBeenDone: true }
@@ -65,7 +70,7 @@ test('should fail to wrap register method when an error occurs', async t => {
         },
     }
 
-    const method = methodWrapper('register')(wampMock)
+    const method = methodWrapper('register', wampMock)
 
     const error = await t.throws(
         method(
@@ -91,14 +96,19 @@ test('should fail to wrap register method when an error occurs', async t => {
 test('should wrap subscribe method correctly with the right options', async t => {
     t.plan(7)
 
+    const args = {
+        argsDict: { objectFromCall: true },
+        details: { procedure: 'procedure' },
+    }
+
     const options = {
         other: true,
-        pre(payload) {
+        pre({ payload }) {
             t.true(payload.objectFromCall)
 
             return { fromPre: true }
         },
-        post(payload, preResult, mainResult) {
+        post({ payload }, mainResult, preResult) {
             t.true(preResult.fromPre)
             t.true(payload.objectFromCall)
             t.true(mainResult.hasBeenDone)
@@ -110,15 +120,15 @@ test('should wrap subscribe method correctly with the right options', async t =>
             t.true(options.other)
 
             callbacks.onSuccess(true)
-            callbacks.onEvent({ objectFromCall: true })
+            callbacks.onEvent(args)
         },
     }
 
-    const method = methodWrapper('subscribe')(wampMock)
+    const method = methodWrapper('subscribe', wampMock)
 
     const response = await method(
         'test',
-        payload => {
+        ({ payload }) => {
             t.true(payload.objectFromCall)
 
             return { hasBeenDone: true }
@@ -148,7 +158,7 @@ test('should fail to wrap subscribe method when an error occurs', async t => {
         },
     }
 
-    const method = methodWrapper('subscribe')(wampMock)
+    const method = methodWrapper('subscribe', wampMock)
 
     const error = await t.throws(
         method(
@@ -193,7 +203,7 @@ test('should wrap call method correctly with the right options', async t => {
         },
     }
 
-    const method = methodWrapper('call')(wampMock)
+    const method = methodWrapper('call', wampMock)
 
     const response = await method('test', { isPayload: true }, options)
 
@@ -228,7 +238,7 @@ test('should fail to wrap call method when an error occurs', async t => {
         },
     }
 
-    const method = methodWrapper('call')(wampMock)
+    const method = methodWrapper('call', wampMock)
 
     const error = await t.throws(method('test', { isPayload: true }, options))
 
@@ -263,7 +273,7 @@ test('should wrap publish method correctly with the right options', async t => {
         },
     }
 
-    const method = methodWrapper('publish')(wampMock)
+    const method = methodWrapper('publish', wampMock)
 
     const response = await method('test', { isPayload: true }, options)
 
@@ -298,7 +308,7 @@ test('should fail to wrap call method when an error occurs', async t => {
         },
     }
 
-    const method = methodWrapper('publish')(wampMock)
+    const method = methodWrapper('publish', wampMock)
 
     const error = await t.throws(method('test', { isPayload: true }, options))
 
@@ -333,11 +343,11 @@ test('should throw error when method does not exists', async t => {
         },
     }
 
-    const method = methodWrapper('null')(wampMock)
+    const method = methodWrapper('null', wampMock)
 
     const error = await t.throws(method('test', { isPayload: true }, options))
 
-    const expectedResponse = `Cannot find module '${src_path}/wamp/null'`
+    const expectedResponse = `Cannot find module '${src_path}/null'`
 
     t.deepEqual(error.message, expectedResponse)
 })

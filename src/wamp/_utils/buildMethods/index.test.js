@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const buildMethods = require('./buildMethods')
+const buildMethods = require('.')
 
 const methods = [
     'call',
@@ -31,6 +31,7 @@ test('should build methods object correctly', async t => {
 
     for (let method in methodsObj) {
         t.true(methods.includes(method))
+
         methodsObj[method]('route', {}, {})
     }
 })
